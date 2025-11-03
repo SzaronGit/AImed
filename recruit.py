@@ -156,18 +156,18 @@ cv_score = np.round(cross_val_score(clf_tree, X_train, y_train), 2)
 print(f"Scores of training data cross-validation (each fold):")
 list(map(print, cv_score))
 print(f"\nCross-validation mean score: {np.mean(cv_score):.3}")
-print(f"Standard deviation of CV score: {np.std(cv_score):.3f}")
+print(f"Standard deviation of CV score: {np.std(cv_score):.3f}\n")
 
 #-----------------------------------------------------------------------------------------------
 print("Support vector Machine (SVM)")
 
 pipe_svc = Pipeline(steps=[
     ("scaler", StandardScaler()),
-    ("model", SVC(                 
-        kernel="rbf",             
-        C=3,                        
-        gamma="scale",              
-        class_weight=None           
+    ("model", SVC(
+        kernel="rbf",
+        C=3,
+        gamma="scale",
+        class_weight=None
     ))
 ])
 
@@ -177,4 +177,28 @@ cv_score = np.round(cross_val_score(pipe_svc, X_train, y_train), 2)
 print("Scores of training data cross-validation (each fold):")
 list(map(print, cv_score))
 print(f"\nCross-validation mean score: {cv_score.mean():.3f}")
-print(f"Standard deviation of CV score: {cv_score.std():.3f}")
+print(f"Standard deviation of CV score: {cv_score.std():.3f}\n")
+
+#-------------------------------------------------------------------------------------
+print("Logistic Regression")
+
+pipe_log = Pipeline(steps=[
+    ("scaler", StandardScaler()),          
+    ("model", LogisticRegression(           
+        C=1,                             
+        penalty="l1",                       
+        solver="liblinear",                 
+        max_iter=1000,                      
+        class_weight=None                   
+    ))
+])
+
+pipe_log.fit(X_train, y_train)
+
+cv_score = np.round(cross_val_score(pipe_log, X_train, y_train), 2)
+
+print("Scores of training data cross-validation (each fold):")
+list(map(print, cv_score))
+print(f"\nCross-validation mean score: {cv_score.mean():.3f}")
+print(f"Standard deviation of CV score: {cv_score.std():.3f}\n")
+

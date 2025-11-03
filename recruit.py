@@ -282,3 +282,26 @@ print(f"- F1-Score of Decision Tree model on test dataset:    {f1_tree:.4f}")
 print(f"- F1-Score of SVC model on test dataset:              {f1_svc:.4f}")
 print(f"- F1-Score of Logistic Regression model on test dataset:    {f1_log:.4f}")
 print(f"- F1-Score of Random Forest model on test dataset:    {f1_rf:.4f}\n")
+
+#---------------------------------------------------------------------------------------------------
+print("Cross Validation")
+
+scores = cross_val_score(pipe_knn, X_train, y_train, cv=5)
+print("knn_scores: ",scores)
+print("knn_mean: ",scores.mean(),"\n")
+
+scores = cross_val_score(pipe_svc, X_train, y_train, cv=5)
+print("svc_scores: ",scores)
+print("svc_mean: ",scores.mean(),"\n")
+
+scores = cross_val_score(pipe_log, X_train, y_train, cv=5)
+print("log_scores: ",scores)
+print("log_mean: ",scores.mean(),"\n")
+
+scores = cross_val_score(clf_tree, X_train, y_train, cv=5)
+print("tree_scores: ",scores)
+print("tree_mean: ",scores.mean(),"\n")
+
+scores = cross_val_score(clf_rf, X_train, y_train, cv=5)
+print("rf_scores: ",scores)
+print("rf_mean: ",scores.mean(),"\n")

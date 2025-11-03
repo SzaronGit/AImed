@@ -305,3 +305,26 @@ print("tree_mean: ",scores.mean(),"\n")
 scores = cross_val_score(clf_rf, X_train, y_train, cv=5)
 print("rf_scores: ",scores)
 print("rf_mean: ",scores.mean(),"\n")
+
+#------------------------------------------------------------------------------------------------
+print("Choosen SVC model")
+
+from sklearn.metrics import RocCurveDisplay, PrecisionRecallDisplay, roc_auc_score
+import matplotlib.pyplot as plt
+
+pipe_svc.fit(X_train, y_train)
+y_pred = pipe_svc.predict(X_test)
+y_pred_attempt = pipe_svc.decision_function(X_test)
+
+roc_display = RocCurveDisplay.from_predictions(y_test, y_pred_attempt)
+plt.title("ROC Curve for SVM (RBF kernel)")
+plt.grid(True)
+plt.show()
+
+pr_display = PrecisionRecallDisplay.from_predictions(y_test, y_pred_attempt)
+plt.title("Precision–Recall Curve for SVM (RBF kernel)")
+plt.grid(True)
+plt.show()
+
+roc_auc = roc_auc_score(y_test, y_pred_attempt)
+print(f"Area Under ROC Curve (AUC): {roc_auc:.3f}")

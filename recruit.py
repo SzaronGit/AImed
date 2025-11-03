@@ -137,3 +137,23 @@ print("Scores of training data cross-validation (each fold):")
 list(map(print, cv_score))
 print(f"\nCross-validation mean score: {np.mean(cv_score):.3}")
 print(f"Standard deviation of CV score: {np.std(cv_score):.3f}\n")
+
+#-------------------------------------------------------------------------------
+print("Decision Tree")
+
+clf_tree = DecisionTreeClassifier(
+    max_depth=7,            
+    criterion='log_loss',
+    min_samples_split=7,
+    min_samples_leaf=5,
+    class_weight=None
+)
+
+clf_tree.fit(X_train, y_train)
+
+cv_score = np.round(cross_val_score(clf_tree, X_train, y_train), 2)
+
+print(f"Scores of training data cross-validation (each fold):")
+list(map(print, cv_score))
+print(f"\nCross-validation mean score: {np.mean(cv_score):.3}")
+print(f"Standard deviation of CV score: {np.std(cv_score):.3f}")

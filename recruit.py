@@ -183,13 +183,13 @@ print(f"Standard deviation of CV score: {cv_score.std():.3f}\n")
 print("Logistic Regression")
 
 pipe_log = Pipeline(steps=[
-    ("scaler", StandardScaler()),          
-    ("model", LogisticRegression(           
-        C=1,                             
-        penalty="l1",                       
-        solver="liblinear",                 
-        max_iter=1000,                      
-        class_weight=None                   
+    ("scaler", StandardScaler()),
+    ("model", LogisticRegression(
+        C=1,
+        penalty="l1",
+        solver="liblinear",
+        max_iter=1000,
+        class_weight=None
     ))
 ])
 
@@ -201,4 +201,24 @@ print("Scores of training data cross-validation (each fold):")
 list(map(print, cv_score))
 print(f"\nCross-validation mean score: {cv_score.mean():.3f}")
 print(f"Standard deviation of CV score: {cv_score.std():.3f}\n")
+
+#--------------------------------------------------------------------------------------------------
+print("Random Forest Classifier")
+
+clf_rf = RandomForestClassifier(
+    max_depth=6,
+    min_samples_split=6,
+    n_estimators=125,
+    min_samples_leaf=2,
+    max_features='sqrt'
+)
+
+clf_rf.fit(X_train, y_train)
+
+cv_score = np.round(cross_val_score(clf_rf, X_train, y_train), 2)
+
+print(f"Scores of training data cross-validation (each fold):")
+list(map(print, cv_score))
+print(f"\nCross-validation mean score: {np.mean(cv_score):.3f}")
+print(f"Standard deviation of CV score: {np.std(cv_score):.3f}\n")
 
